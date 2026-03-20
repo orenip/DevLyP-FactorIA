@@ -1,0 +1,82 @@
+# FactorIA .gitignore
+
+# ================================
+# SECRETOS — NUNCA subir
+# ================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+secrets/
+
+# ================================
+# DEPENDENCIAS
+# ================================
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+pip-log.txt
+
+# ================================
+# BUILD / DIST
+# ================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+*.egg-info/
+*.egg
+MANIFEST
+
+# ================================
+# LOGS
+# ================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# ================================
+# TESTING
+# ================================
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.nyc_output/
+*.lcov
+
+# ================================
+# IDEs
+# ================================
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ================================
+# DOCKER
+# ================================
+.docker/
+
+# ================================
+# CLAUDE CODE
+# ================================
+# No ignorar CLAUDE.md — es parte del repo
+# No ignorar .claude/ — los comandos se comparten
+
+# ================================
+# UPLOADS / MEDIA (si se usan localmente)
+# ================================
+uploads/
+media/
+static/collected/

@@ -1,0 +1,27 @@
+{
+  "projectName": "FactorIA Project",
+  "defaultModel": "claude-sonnet-4-20250514",
+  "contextFiles": [
+    "CLAUDE.md",
+    "implementation/phases/CURRENT_PHASE.md"
+  ],
+  "rules": [
+    "Lee siempre CLAUDE.md al inicio de cada sesión",
+    "Sigue el sistema de capas definido en CLAUDE.md",
+    "Nada se queda a medias — cada archivo debe ser funcional y completo",
+    "Documenta decisiones de arquitectura en docs/decisions/",
+    "Actualiza CURRENT_PHASE.md al completar cada tarea",
+    "Usa las skills de la carpeta skills/ para código, review y debug",
+    "Máximo 3 archivos abiertos simultáneamente",
+    "Haz checkpoint antes de agotar el contexto"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "__pycache__",
+    ".venv",
+    "coverage"
+  ]
+}

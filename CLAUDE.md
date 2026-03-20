@@ -1,11 +1,12 @@
-# CLAUDE.md — FactorIA Project Intelligence
+# CLAUDE.md — FactorIA: Referencia de metodología
 
-> Este archivo es la MEMORIA CENTRAL del proyecto. Claude Code lo lee en cada sesión.
-> Nunca eliminar. Actualizar tras cada fase completada.
+> REFERENCIA COMPLETA — No se carga automáticamente (ahorra tokens).
+> Estado del proyecto → CLAUDE_STATE.md (carga automática en cada sesión).
+> Leer este archivo solo cuando necesites la metodología completa.
 
 ---
 
-## 🧠 IDENTIDAD DEL PROYECTO
+## IDENTIDAD DEL PROYECTO
 
 **Nombre:** [PROJECT_NAME]
 **Tipo:** [web-app | api | saas | automation | tool]
@@ -15,51 +16,51 @@
 
 ---
 
-## 🏗️ ARQUITECTURA APROBADA
+## ARQUITECTURA APROBADA
 
 ```
-[Diagrama ASCII o descripción de la arquitectura]
+[Diagrama ASCII — rellenar con /new-project]
 Ejemplo:
-  Frontend (Next.js) → API Gateway → Backend (FastAPI) → DB (PostgreSQL)
-                                   ↘ Workers (Celery) → Cache (Redis)
+  Frontend (Next.js) → Nginx → Backend (FastAPI) → DB (PostgreSQL)
+                                                 ↘ Cache (Redis)
 ```
 
 **Decisiones clave:**
-- [ ] Base de datos elegida: [razón]
-- [ ] Auth strategy: [razón]
-- [ ] Deployment target: [razón]
+- Base de datos: [razón]
+- Auth strategy: [razón]
+- Deployment target: [razón]
 
 ---
 
-## 📁 ESTRUCTURA DE CARPETAS
+## ESTRUCTURA DE CARPETAS
 
 ```
-factorIA/
-├── .claude/          → Comandos slash y configuración Claude Code
+proyecto/
+├── .claude/          → Comandos slash (/plan /new-project /feature /debug /next-phase /status /checkpoint /review /security /deploy)
 ├── backend/          → API, modelos, servicios, lógica de negocio
 ├── frontend/         → UI, componentes, páginas, hooks
-├── deployment/       → Docker, nginx, scripts CI/CD
+├── deployment/       → Dockerfiles, nginx, scripts CI/CD
 ├── design/           → Tokens de diseño, assets, wireframes
-├── docs/             → Arquitectura, API docs, decisiones (ADRs)
-├── implementation/   → Fases, tareas, checklist de construcción
-├── mcps/             → Configuración de MCP servers
-├── planning/         → Sprints, features, roadmap
-├── skills/           → Skills de Claude para coding, review, debug
-└── tests/            → Unit, integration, e2e
+├── docs/             → Arquitectura, API docs, ADRs, SESSION_LOG
+├── implementation/   → Fases, CURRENT_PHASE.md
+├── mcps/             → Configuración MCP servers
+├── planning/         → BACKLOG.md, features specs, sprints
+├── skills/           → CODING_STANDARDS, DEBUG_PROTOCOL, CODE_REVIEW
+└── tests/            → unit/, integration/, e2e/
 ```
 
 ---
 
-## ⚡ REGLAS DE IA — NUNCA IGNORAR
+## REGLAS DE IA — NUNCA IGNORAR
 
 ### 1. NADA SE QUEDA A MEDIAS
 - Cada archivo generado debe ser funcional y completo
-- Si una tarea es muy grande → dividir en subtareas, completar cada una antes de la siguiente
-- Antes de terminar una sesión: revisar `implementation/phases/CURRENT_PHASE.md`
+- Tarea muy grande → dividir en subtareas, completar cada una antes de la siguiente
+- Antes de terminar sesión: actualizar CLAUDE_STATE.md y hacer /checkpoint
 
 ### 2. SISTEMA DE CAPAS (orden obligatorio)
 ```
-CAPA 1: Planning    → Aprobar antes de construir
+CAPA 1: Planning    → Aprobar arquitectura antes de construir
 CAPA 2: Design      → Tokens y estructura antes de UI
 CAPA 3: Backend     → API y modelos antes de conectar frontend
 CAPA 4: Frontend    → UI sobre API estable
@@ -68,26 +69,25 @@ CAPA 6: Deployment  → Solo cuando tests pasan
 ```
 
 ### 3. GESTIÓN DE CONTEXTO Y TOKENS
-- Al iniciar sesión: leer SOLO este CLAUDE.md + archivo de fase actual
-- No leer archivos innecesarios; usar `implementation/phases/CURRENT_PHASE.md` como guía
-- Si el contexto se llena: hacer checkpoint en `docs/decisions/SESSION_LOG.md`
-- Máximo 3 archivos abiertos simultáneamente salvo que sea imprescindible
+- Auto-cargados: CLAUDE_STATE.md + CURRENT_PHASE.md (mínimo necesario)
+- No leer archivos innecesarios — verificar CLAUDE_STATE.md primero
+- Máximo 3 archivos abiertos simultáneamente
+- Contexto al 70% → /checkpoint inmediato → guardar en docs/decisions/SESSION_LOG.md
 
 ### 4. SEGURIDAD — OBLIGATORIO
-- Nunca hardcodear credenciales (usar `.env`)
-- Validar SIEMPRE inputs del usuario en backend
+- Nunca hardcodear credenciales (usar .env)
+- Validar SIEMPRE inputs en backend (Pydantic)
 - Auth middleware en todas las rutas protegidas
-- Ver checklist completo en `docs/architecture/SECURITY.md`
+- Checklist completo: docs/architecture/SECURITY.md
 
 ### 5. ANTES DE CADA COMMIT
 ```bash
-# Ejecutar siempre:
 ./deployment/scripts/pre-commit-check.sh
 ```
 
 ---
 
-## 🔄 ESTADO ACTUAL DE FASES
+## FASES DEL PROYECTO
 
 | Fase | Nombre | Estado |
 |------|--------|--------|
@@ -99,13 +99,12 @@ CAPA 6: Deployment  → Solo cuando tests pasan
 | 6 | Tests y validación | ⬜ pendiente |
 | 7 | Deployment | ⬜ pendiente |
 
-**Fase activa:** Ver `implementation/phases/CURRENT_PHASE.md`
+Detalle de cada fase: `implementation/phases/ALL_PHASES.md`
+Fase activa y tareas: `implementation/phases/CURRENT_PHASE.md`
 
 ---
 
-## 🛑 ERRORES CONOCIDOS Y SOLUCIONES
-
-<!-- Registrar aquí errores encontrados y sus soluciones para no repetirlos -->
+## ERRORES CONOCIDOS Y SOLUCIONES
 
 | Error | Causa | Solución |
 |-------|-------|---------|
@@ -113,10 +112,17 @@ CAPA 6: Deployment  → Solo cuando tests pasan
 
 ---
 
-## 📝 NOTAS DE SESIÓN
+## COMANDOS SLASH DISPONIBLES
 
-<!-- Claude actualiza esto al final de cada sesión -->
-**Última sesión:** [FECHA]
-**Completado:** 
-**Pendiente:**
-**Bloqueantes:**
+| Comando | Cuándo usarlo |
+|---------|---------------|
+| `/new-project` | Al inicio: convierte un brief en proyecto completamente configurado |
+| `/plan` | Planificar la sesión actual (muestra plan, espera aprobación) |
+| `/status` | Dashboard rápido del estado del proyecto (solo 2 archivos) |
+| `/feature [nombre]` | Implementar una feature completa (spec → backend → frontend → tests) |
+| `/next-phase` | Verificar checklist y avanzar a la siguiente fase |
+| `/debug` | Protocolo sistemático de debugging |
+| `/review` | Auditoría de código antes de merge |
+| `/security` | Auditoría de seguridad |
+| `/checkpoint` | Guardar estado antes de cerrar sesión |
+| `/deploy` | Checklist de deployment |

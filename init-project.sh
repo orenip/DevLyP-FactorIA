@@ -32,11 +32,11 @@ if [ -d "$DEST_DIR" ]; then
   exit 1
 fi
 
-cp -r "$SCRIPT_DIR" "$DEST_DIR"
+# Copiar excluyendo .git (evita contaminar el nuevo proyecto con historial del template)
+# y excluyendo los scripts de inicialización (no se necesitan en proyectos nuevos)
+rsync -a --exclude='.git' --exclude='init-project.sh' --exclude='start-execution.sh' \
+  "$SCRIPT_DIR/" "$DEST_DIR/"
 cd "$DEST_DIR"
-
-# Eliminar scripts de la copia (no se necesitan en el proyecto)
-rm -f init-project.sh start-execution.sh
 
 echo "   ✅ Estructura copiada en: $DEST_DIR"
 

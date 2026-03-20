@@ -2,7 +2,7 @@
   "projectName": "FactorIA Project",
   "defaultModel": "claude-sonnet-4-20250514",
   "contextFiles": [
-    "CLAUDE.md",
+    "CLAUDE_STATE.md",
     "implementation/phases/CURRENT_PHASE.md"
   ],
   "rules": [

@@ -34,10 +34,25 @@ echo "════════════════════════�
 # Secretos en código
 echo ""
 echo "🔐 Verificando secretos..."
-if grep -r "password\s*=\s*['\"][^'\"]\+['\"]" --include="*.py" --include="*.ts" --include="*.js" . --exclude-dir=node_modules --exclude-dir=.venv 2>/dev/null | grep -v ".env" | grep -v "example" | grep -q .; then
-  check "Sin passwords hardcodeados" "fail"
+
+# Patrón ampliado: passwords, tokens, API keys, secrets
+SECRET_PATTERNS='(password|passwd|secret|api_key|apikey|token|private_key|auth_key)\s*=\s*['"'"'"][^'"'"'"]{4,}['"'"'"]'
+if grep -rEi "$SECRET_PATTERNS" \
+    --include="*.py" --include="*.ts" --include="*.js" --include="*.tsx" \
+    . --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=.git 2>/dev/null \
+    | grep -v "\.env" | grep -v "example" | grep -v "test_" | grep -v "\.spec\." | grep -q .; then
+  check "Sin credenciales hardcodeadas (password/token/api_key)" "fail"
 else
-  check "Sin passwords hardcodeados" "ok"
+  check "Sin credenciales hardcodeadas (password/token/api_key)" "ok"
+fi
+
+# Detectar patrones de claves conocidas (AWS, etc.)
+if grep -rE "(AKIA[0-9A-Z]{16}|sk-[a-zA-Z0-9]{32,}|ghp_[a-zA-Z0-9]{36})" \
+    --include="*.py" --include="*.ts" --include="*.js" \
+    . --exclude-dir=node_modules --exclude-dir=.venv --exclude-dir=.git 2>/dev/null | grep -q .; then
+  check "Sin API keys de servicios externos (AWS/OpenAI/GitHub)" "fail"
+else
+  check "Sin API keys de servicios externos (AWS/OpenAI/GitHub)" "ok"
 fi
 
 if [ -f ".env" ] && git ls-files --error-unmatch .env 2>/dev/null; then
